@@ -48,10 +48,9 @@ Pronto! A cada minuto, o sistema verificará seus e-mails. Ao receber um novo, e
 ## 🤝 Contribuição
 Sinta-se à vontade para abrir issues ou enviar pull requests com melhorias, correções de bugs ou novas funcionalidades.
 
-<<<<<<< HEAD
-📜 Licença
+## 📜 Licença
 Este projeto é distribuído sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
-=======
+
 ## 📜 Licença
 Este projeto é distribuído sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 >>>>>>> 93dc280 (alteração no readme.)
