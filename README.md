@@ -51,6 +51,3 @@ Sinta-se à vontade para abrir issues ou enviar pull requests com melhorias, cor
 ## 📜 Licença
 Este projeto é distribuído sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
-## 📜 Licença
-Este projeto é distribuído sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
->>>>>>> 93dc280 (alteração no readme.)
