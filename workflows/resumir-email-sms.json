@@ -1,0 +1,230 @@
+{
+  "name": "resumir-email-sms",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a2210ada-1c44-4a4d-a1ef-9e8eb98c6881",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OX1KOnQrkPZ7OdmO",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e9c8b8dc-32d0-491a-8d3f-1dbeb119b311",
+              "name": "From",
+              "value": "={{ $json.From }}",
+              "type": "string"
+            },
+            {
+              "id": "8a518d01-1121-41c4-a67e-4972e1afa50b",
+              "name": "Subject",
+              "value": "={{ $json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "c23bcc7d-9df6-40a3-8f2a-d492a41dea99",
+              "name": "To",
+              "value": "={{ $json.To }}",
+              "type": "string"
+            },
+            {
+              "id": "a5130aeb-63c0-4b1a-8e6a-d017462e2935",
+              "name": "snippet",
+              "value": "={{ $json.snippet }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "531a909d-83bc-4d08-bb8b-81f37b343e55",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Atue como um especialista em resumir e-mails.\n\nRecebi o seguinte e-mail:   {{ $json.snippet }}\n\nResuma esse e-mail em apenas um paragrafo.",
+              "role": "model"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "b316f705-d198-4dc0-8177-d80cf9994d6c",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xVltalvPRvccnWDY",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1796a875-a96c-4603-b3cc-273b3c3871f7",
+              "name": "content.parts[0].text",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        0
+      ],
+      "id": "817ffe0a-7ded-41c1-a680-53475b1a98eb",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "from": "+5571993046774",
+        "to": "+5571993046774",
+        "message": "=ia-email:   {{ $json.content.parts[0].text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sms77",
+      "typeVersion": 1,
+      "position": [
+        976,
+        0
+      ],
+      "id": "4f49b027-859d-4a65-b1e3-31ef19a1d331",
+      "name": "Send an SMS",
+      "credentials": {
+        "sms77Api": {
+          "id": "uBBtXL8yRWhkeMci",
+          "name": "seven account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        192
+      ],
+      "id": "5b16358f-0b79-4a19-bb61-b28a1da765ab",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Send an SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an SMS": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "74c85c4f-24a4-42d7-a557-5f49e046b85a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0e179f65d867dc3c32e0f2982180e8e97664db43e0cbf8d57548f7263885230d"
+  },
+  "id": "IrYYx084HzYHsBRv",
+  "tags": []
+}
