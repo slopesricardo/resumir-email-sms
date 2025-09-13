@@ -1,10 +1,12 @@
-
+[![n8n](https://img.shields.io/badge/Feito%20com-n8n-blueviolet?logo=n8n)](https://n8n.io/)
+[![Tipo](https://img.shields.io/badge/Tipo-Automação-orange)](https://n8n.io/)
+[![Linguagem](https://img.shields.io/badge/Linguagem-JSON-lightgrey)](https://www.json.org/)
 
 Este projeto apresenta um workflow de automação construído na plataforma n8n que monitora uma caixa de e-mails, utiliza a IA do Google Gemini para resumir o conteúdo das novas mensagens recebidas e, por fim, envia esse resumo como uma notificação por SMS.
 
 É uma demonstração prática de como integrar serviços de e-mail, modelos de linguagem avançados (LLMs) e serviços de comunicação para criar um agente autônomo simples e funcional.
 
-✅ ##Pré-requisitos
+## ✅ Pré-requisitos
 Antes de configurar este workflow, você precisará de:
 
 Uma instância do n8n (seja na nuvem ou auto-hospedada).
